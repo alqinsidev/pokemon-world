@@ -75,7 +75,7 @@ const PokemonList: React.FunctionComponent = ()=> {
         <Container>
             <StyledLink to="/profile">
                 <Card>
-                    <Img src="https://cdn-icons-png.flaticon.com/512/361/361998.png" alt=""/>
+                    {/* <Img src="https://cdn-icons-png.flaticon.com/512/361/361998.png" alt=""/> */}
                     <H2>My Pokemon : {myPokemon?.length || "0"}</H2>
                 </Card>
             </StyledLink>
