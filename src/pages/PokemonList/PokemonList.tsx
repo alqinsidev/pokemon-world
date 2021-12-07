@@ -24,7 +24,7 @@ type Pokemon = {
     image: string;
 }
 const PokemonList: React.FunctionComponent = ()=> {
-    const [pokemons, setPokemons] = useState<Pokemons | undefined>(undefined)
+    const [pokemons, setPokemons] = useState<Pokemons | any | undefined>(undefined)
     const [myPokemon,setMypokemon] = useState<any | undefined>(undefined)
     const {data} = useQuery(POKEMONS,{
         variables:{

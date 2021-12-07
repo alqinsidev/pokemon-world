@@ -1,5 +1,5 @@
 
-const UpdateMyPokemon = (pokemon:any):any => {
+export const UpdateMyPokemon = (pokemon:any):any => {
     const existingPokemon = JSON.parse(localStorage.getItem('myPokemon') || '[]');
     const isExsist:number = (existingPokemon.length > 0) ? 
                         existingPokemon.findIndex((element:any) => element.pokemon.nickname === pokemon.pokemon.nickname)
@@ -18,4 +18,16 @@ const UpdateMyPokemon = (pokemon:any):any => {
 
 }
 
-export {UpdateMyPokemon}
+export const ReleasePokemon = (pokemon:any):any => {
+    const existingPokemon = JSON.parse(localStorage.getItem('myPokemon') || '[]');
+    const index = existingPokemon.findIndex((element:any) => element.pokemon.nickname === pokemon.pokemon.nickname)
+    const newPokemon = immutableSplice(existingPokemon,index,1)
+    localStorage.setItem('myPokemon',JSON.stringify(newPokemon));
+    return newPokemon;
+    
+}
+
+const immutableSplice = (arr:any, start:number, deleteCount:number, ...items:any):any => {
+    return [ ...arr.slice(0, start), ...items, ...arr.slice(start + deleteCount) ]
+    }
+

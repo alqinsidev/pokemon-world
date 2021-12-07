@@ -14,11 +14,9 @@ const MyPokemonList:React.FunctionComponent = ()=>{
   const handleRelease = (e:object):void =>{
     setPokemon(e);
     setIsOpen(true);
-    console.log("nyoy");
-    
   }
   return (
-    <div>
+    <Container>
        <Card>
          <h3>{profile?.DisplayName} Pokemon : {profile.Pokemons.length}</h3>
        </Card>
@@ -26,10 +24,13 @@ const MyPokemonList:React.FunctionComponent = ()=>{
             profile?.Pokemons.map((pokemon:any,index:number) => <PokemonCard onClick={()=>handleRelease({name:pokemon.pokemon.name,nickname:pokemon.pokemon.nickname,image:pokemon.image})} key={index} name={pokemon.pokemon.name} nickname={pokemon.pokemon.nickname} owned={false} image={pokemon.image} />)
         }
         {isOpen?<ReleaseModal onClose={()=> setIsOpen(false)} name={pokemon?.name} nickname={pokemon.nickname}/>:null}
-    </div>
+    </Container>
   );
 }
 
+const Container = styled.div`
+    min-height:85vh;
+`
 const Card = styled.div`
     display:flex;
     flex-direction:row;

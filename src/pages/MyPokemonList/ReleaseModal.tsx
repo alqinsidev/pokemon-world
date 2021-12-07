@@ -9,6 +9,7 @@ import { Wait } from '../../misc/Wait'
 import { Color } from '../../styles/Color'
 import { useQuery } from '@apollo/client'
 import { POKEMON } from '../../graphql/query'
+import { ReleasePokemon } from '../../misc/UpdatePokemon'
 
 interface Props {
     onClose:Function;
@@ -43,6 +44,11 @@ const ReleaseModal:React.FunctionComponent<Props> = ({onClose,name,nickname})=>{
             name:name
         }
     })
+
+    const handleRelease = (input:any):void =>{
+       const update:Function = ReleasePokemon(input);
+       setProfile({...profile,Pokemons:update})
+    }
     useEffect(()=> {
         if(data){
             setPokemon(data.pokemon)
@@ -59,7 +65,7 @@ const ReleaseModal:React.FunctionComponent<Props> = ({onClose,name,nickname})=>{
                     <Main>
                         <Image/>
                         <h4>{nickname} ({pokemon?.name})</h4>
-                        <Button color={Color.danger} label="Release" onClick={()=>null}/>
+                        <Button color={Color.danger} label="Release" onClick={()=> handleRelease({pokemon:{name:pokemon?.name,nickname:nickname}})}/>
                     </Main>
                 </Modal>
         )

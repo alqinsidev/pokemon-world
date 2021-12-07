@@ -85,9 +85,18 @@ const CatchModal:React.FunctionComponent<Props> = ({onClose,pokemon})=>{
                     name:params.name,
                     nickname:nickname
                 }})
-                console.log("Update",update);
+                console.log(profile.Pokemons.length,update.length,profile.Pokemons.length < update.length);
                 
-                setProfile({...profile,Pokemons:update})
+                if(profile.Pokemons.length < update.length){
+                    setModal(3)
+                    await Wait(2000);
+                    setProfile({...profile,Pokemons:update})
+                } else {
+                    setModal(2)
+                    await Wait(1000);
+                    setModal(1);
+                }
+                // await Wait(2000)
         }
         
         const Image = React.memo(()=><Img src={pokemon?.sprites?.front_default} alt="" />)
@@ -116,20 +125,38 @@ const CatchModal:React.FunctionComponent<Props> = ({onClose,pokemon})=>{
                     {
                         !success? null:
                         <Col>
-                                <Button block={false} label="Release" color={Color.danger} onClick={clickHandler} />
-                                <Button block={false} label="Save it" color={Color.primary} onClick={()=>setModal(1)} />
-                            </Col>
+                            <Button block={false} label="Release" color={Color.danger} onClick={clickHandler} />
+                            <Button block={false} label="Save it" color={Color.primary} onClick={()=>setModal(1)} />
+                        </Col>
                     }
             </Modal>
         )
-    } else {
+    } else if(modal===1) {
         return(
             <Modal>
                 <Main>
                 
                     <Typhograhpy size="1rem">Give your {pokemon?.name} name</Typhograhpy>
                     <Input type="text" value={nickname} onChange={e => setNickname(e.target.value)}/>
-                    <Button label="click me" onClick={()=> SavePokemonHandler()}/>
+                    <Button label="Submit" onClick={()=> SavePokemonHandler()}/>
+                </Main>
+            </Modal>
+        );
+    } else if(modal===2){
+        return(
+            <Modal>
+                <Main>
+                
+                    <Typhograhpy size="1rem">Please enter another name !</Typhograhpy>
+                </Main>
+            </Modal>
+        ); 
+        } else {
+        return(
+            <Modal>
+                <Main>
+                
+                    <Typhograhpy size=".8rem">{nickname} ({pokemon?.name}) has been added to your collection !</Typhograhpy>
                 </Main>
             </Modal>
         );
@@ -173,6 +200,7 @@ const Typhograhpy = styled.div<TyphograhpyProps>`
 const Input = styled.input`
     height:2rem;
     width:100%;
+    margin:15px;
         &[type="text"]{
             color:${Color.darkGray};
             font-weight:600;
