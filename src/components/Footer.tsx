@@ -5,8 +5,9 @@ import { Color } from '../styles/Color';
 const Footer:React.FunctionComponent = ()=> {
     return (
         <FooterWrapper>
-            <h5>Padlan Alqinsi</h5>
-            <h5>@alqinsidev</h5>
+            <StyledLink href="https://linkedin.com/in/alqinsi" target="_blank">Padlan Alqinsi</StyledLink>
+            <StyledLink href="https://github.com/alqinsidev/pokemon-world" target="_blank">@alqinsidev</StyledLink>
+
 
         </FooterWrapper>
     );
@@ -21,5 +22,9 @@ const FooterWrapper = styled.footer`
         color:#fff;
         margin-top:50px;
     `
+const StyledLink = styled.a`
+    text-decoration:none;
+    color:#fff
+`
 
 export default Footer;
