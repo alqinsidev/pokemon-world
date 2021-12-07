@@ -73,6 +73,8 @@ const CardWrapper = styled.div`
     border-color:${Color.darkGrey};
     margin:10px;
     padding:10px;
+    max-width:450px;
+    min-width:280px;
 `
 const Row = styled.div`
     display:flex;

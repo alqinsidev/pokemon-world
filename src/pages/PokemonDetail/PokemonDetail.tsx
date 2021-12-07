@@ -48,42 +48,41 @@ const PokemonDetail: React.FunctionComponent = ()=> {
     },[data])
 
     return (
-        <div>
+        <Main>
             {
                 (pokemon?.id !== null)?
-                <Main>
+                <>
                     <H2>{pokemon?.name || null}</H2>
                     <Img src={pokemon?.sprites?.front_default} alt="" />
                     <Container>
                         <Typhograhpy color={"#000"} size={'1.3rem'} weight={400}>Type</Typhograhpy>
                         <Col>
-                            {pokemon && pokemon.types.map((a:any,b:number) => <Badge stretch={true} key={a.type.name+'-'+a.id} label={a.type.name} color={Type2Color(a.type.name)}/>)}
+                            {pokemon && pokemon.types.map((a:any,b:number) => <Badge stretch={true} key={ `b-` + b + `-` +a.type.name} label={a.type.name} color={Type2Color(a.type.name)}/>)}
                         </Col>
                     </Container>
                     <Container>
                         <Typhograhpy color={"#000"} size={'1.3rem'} weight={400}>Moves</Typhograhpy>
                     </Container>
                     <ContainerOverflow>
-                        {pokemon?.moves.map((a:any)=> <Badge stretch={true} label={a.move.name}/>)}
+                        {pokemon?.moves.map((a:any,b:number)=> <Badge key={`b-`+b} stretch={true} label={a.move.name}/>)}
                     </ContainerOverflow>
                     <Typhograhpy color={Color.gray} size={'.9rem'} weight={400}>You owned {HowMuchIHave(pokemon?.name || '',profile.Pokemons)} {pokemon?.name}</Typhograhpy>
                     <Button color={Color.secondary} label="Catch pokemon" onClick={()=>setIsOpen(!isOpen)} />
-                </Main>
-                :
-                <h4>Pokemon not found</h4>
-            }
-            {isOpen?<CatchModal onClose={()=> setIsOpen(false)} pokemon={pokemon}/>:null}
-        </div>
+                </> 
+                    :
+                    <h4>Pokemon not found</h4>
+                }
+                {isOpen?<CatchModal onClose={()=> setIsOpen(false)} pokemon={pokemon}/>:null}
+            </Main>
     )
 }
 
 const Main = styled.div`
-    ${breakpoints.sm}{
-        display:flex;
-        justify-content:space-between;
-        flex-direction:column;
-        align-items:center;
-    }
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+    align-items:center;
+
 `
 const Container = styled.div`
     display:flex;
@@ -94,7 +93,6 @@ const Container = styled.div`
     padding: 10px;
     ${breakpoints.sm}{
         width:300px;
-        margin:0 100px;
     }
 `
 const ContainerOverflow = styled.div`
@@ -106,11 +104,11 @@ const ContainerOverflow = styled.div`
     align-items:flex-start;
     flex-direction:row;
     border-radius:10px;
-    padding: 10px;
     background-color:#f2f2f2;
+    padding:10px;
+    margin:10px;
     ${breakpoints.sm}{
         width:300px;
-        margin:0 100px 30px;
     }
 `
 

@@ -18,7 +18,7 @@ const MyPokemonList:React.FunctionComponent = ()=>{
   return (
     <Container>
        <Card>
-         <h3>{profile?.DisplayName} Pokemon : {profile.Pokemons.length}</h3>
+         <h3>MY POKEMON : {profile.Pokemons.length}</h3>
        </Card>
        {
             profile?.Pokemons.map((pokemon:any,index:number) => <PokemonCard onClick={()=>handleRelease({name:pokemon.pokemon.name,nickname:pokemon.pokemon.nickname,image:pokemon.image})} key={index} name={pokemon.pokemon.name} nickname={pokemon.pokemon.nickname} owned={false} image={pokemon.image} />)
@@ -29,7 +29,12 @@ const MyPokemonList:React.FunctionComponent = ()=>{
 }
 
 const Container = styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
     min-height:85vh;
+
 `
 const Card = styled.div`
     display:flex;
@@ -42,6 +47,8 @@ const Card = styled.div`
     border-style:solid;
     border-width:.5px;
     border-color:${Color.pikachuYellow};
+    max-width:470px;
+    min-width:280px;
         &:hover{
             background-color:${Color.pikachuYellow};
         }

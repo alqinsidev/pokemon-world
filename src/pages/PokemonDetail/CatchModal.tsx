@@ -47,23 +47,18 @@ const CatchModal:React.FunctionComponent<Props> = ({onClose,pokemon})=>{
         if(!busy){
             setBusy(true)
             await Wait(3000);
-            console.log(`Trying to catch ${params.name}`);
+            // console.log(`Trying to catch ${params.name}`);
             setButtonLabel(`Almost there ...`)
             try{
                 await Wait(3000);
                 if(CatchPossibilities()){
-                    console.log(`${params.name} are successfully catched`);
-                    // const update:Function = UpdateMyPokemon({pokemon:{
-                        //     name:params.name,
-                        //     nickname:"beni"
-                        // }})
-                        // setProfile({...profile,Pokemons:update})
+                    // console.log(`${params.name} are successfully catched`);
                         setButtonColor(Color.success)
                         setButtonLabel(`Yeaaayy ...`)
                         await Wait(2000);
                         setSuccess(true)
                     } else {
-                        console.log(`${params.name} is running away !`);
+                        // console.log(`${params.name} is running away !`);
                         setButtonColor(Color.danger)
                         setButtonLabel(`No... He ran away`)
                         await Wait(2000);
@@ -85,7 +80,7 @@ const CatchModal:React.FunctionComponent<Props> = ({onClose,pokemon})=>{
                     name:params.name,
                     nickname:nickname
                 }})
-                console.log(profile.Pokemons.length,update.length,profile.Pokemons.length < update.length);
+                // console.log(profile.Pokemons.length,update.length,profile.Pokemons.length < update.length);
                 
                 if(profile.Pokemons.length < update.length){
                     setModal(3)

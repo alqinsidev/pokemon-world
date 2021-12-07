@@ -3,7 +3,6 @@ import Modal from '../../components/Modal'
 import styled from '@emotion/styled'
 import { breakpoints } from '../../styles/Screen'
 import Button from '../../components/Button'
-import { useParams } from 'react-router'
 import { PokemonContext } from '../../context/PokemonContext'
 import { Wait } from '../../misc/Wait'
 import { Color } from '../../styles/Color'
@@ -32,9 +31,9 @@ type TyphograhpyProps = {
 }
 
 const ReleaseModal:React.FunctionComponent<Props> = ({onClose,name,nickname})=>{
-    let params = useParams();
+    const [modal,setModal] = useState<number>(0);
     const [pokemon,setPokemon] = useState<Pokemon | undefined>(undefined);
-    const {profile,setProfile} = useContext(PokemonContext)
+    const {profile,setProfile} = useContext(PokemonContext);
     
     const clickHandler = (event:any):void => {
         onClose();
@@ -45,8 +44,11 @@ const ReleaseModal:React.FunctionComponent<Props> = ({onClose,name,nickname})=>{
         }
     })
 
-    const handleRelease = (input:any):void =>{
+    const handleRelease = async (input:any):Promise<void> =>{
        const update:Function = ReleasePokemon(input);
+       setModal(1)
+       await Wait(2000)
+       setModal(0)
        setProfile({...profile,Pokemons:update})
     }
     useEffect(()=> {
@@ -59,16 +61,26 @@ const ReleaseModal:React.FunctionComponent<Props> = ({onClose,name,nickname})=>{
         
         
         const Image = React.memo(()=><Img src={pokemon?.sprites?.front_default} alt="" />)
-            return(
-                <Modal>
+            if(modal === 0){
+
+                return(
+                    <Modal>
                     <button onClick={clickHandler}>X</button>
                     <Main>
                         <Image/>
-                        <h4>{nickname} ({pokemon?.name})</h4>
+                        <Typhograhpy size=".9rem">{nickname} ({pokemon?.name})</Typhograhpy>
                         <Button color={Color.danger} label="Release" onClick={()=> handleRelease({pokemon:{name:pokemon?.name,nickname:nickname}})}/>
                     </Main>
                 </Modal>
-        )
+            )} else {
+
+                return(
+                    <Modal>
+                    <Main>
+                        <Typhograhpy size=".9rem">{nickname} ({pokemon?.name}) has been released</Typhograhpy>
+                    </Main>
+                </Modal>
+            )}
     }
 
 const Main = styled.div`
@@ -77,14 +89,6 @@ ${breakpoints.sm}{
     justify-content:space-between;
     flex-direction:column;
     align-items:center;
-}
-`
-const Col = styled.div`
-${breakpoints.sm}{
-    margin:10px;
-    display:flex;
-    flex-direction:row;
-    justify-content: space-around;
 }
 `
 const Img = styled.img`
@@ -104,14 +108,5 @@ const Typhograhpy = styled.div<TyphograhpyProps>`
     color:${props =>
         props.color? props.color: `#000`
     };
-`
-const Input = styled.input`
-    height:2rem;
-    width:100%;
-        &[type="text"]{
-            color:${Color.darkGray};
-            font-weight:600;
-            font-size:1rem;
-        }
 `
 export default ReleaseModal;

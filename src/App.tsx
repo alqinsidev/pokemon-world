@@ -22,7 +22,7 @@ function App() {
 
   useEffect(()=>{
     // localStorage.setItem('myPokemon','[]');
-    console.log("myPokemon:",JSON.parse(localStorage.getItem('myPokemon') || '[]'));
+    // console.log("myPokemon:",JSON.parse(localStorage.getItem('myPokemon') || '[]'));
     if(localStorage.getItem('displayName') === null){
       localStorage.setItem('displayName',"Guest")
     }
