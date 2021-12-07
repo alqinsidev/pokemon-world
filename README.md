@@ -5,7 +5,7 @@ A simple react website coded with typescript and contain information about pokem
 https://pokemon-world-alqinsidev.vercel.app/
 
 ## Data Source
-Data portedto GraphQL by : https://github.com/mazipan/graphql-pokeapi
+Data ported to GraphQL by : https://github.com/mazipan/graphql-pokeapi
 
 ## Things to upgrade
 - Animation
