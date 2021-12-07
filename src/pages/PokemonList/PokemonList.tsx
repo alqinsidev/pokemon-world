@@ -1,11 +1,11 @@
 import React, {useEffect, useState, useContext} from 'react'
 import {useQuery} from '@apollo/client'
-import { POKEMONS } from '../graphql/query'
-import PokemonCard from '../components/PokemonCard'
-import { PokemonContext } from '../context/PokemonContext'
+import { POKEMONS } from '../../graphql/query'
+import PokemonCard from '../../components/PokemonCard'
+import { PokemonContext } from '../../context/PokemonContext'
 import { useNavigate } from 'react-router'
 import styled from '@emotion/styled'
-import { Color } from '../styles/Color'
+import { Color } from '../../styles/Color'
 import { Link } from 'react-router-dom'
 
 type Pokemons = {
@@ -56,11 +56,12 @@ const PokemonList: React.FunctionComponent = ()=> {
     }
     return (
         <div>
-            <Link to="/profile">
+            <StyledLink to="/profile">
                 <Card>
-                    <h1>My Pokemon : {myPokemon?.length || "0"}</h1>
+                    <Img src="https://cdn-icons-png.flaticon.com/512/361/361998.png" alt=""/>
+                    <H2>My Pokemon : {myPokemon?.length || "0"}</H2>
                 </Card>
-            </Link>
+            </StyledLink>
             <h2>Explore more pokemon</h2>
             {
                 pokemons?.results.map((pokemon:any,index:number) => <PokemonCard onClick={pokemonDetail} key={index} name={pokemon.name} url={pokemon.url} image={pokemon.image} />)
@@ -72,14 +73,29 @@ const PokemonList: React.FunctionComponent = ()=> {
 const Card = styled.div`
     display:flex;
     flex-direction:row;
-    justify-content:space-between;
+    justify-content:space-around;
     align-items:center;
     padding:20px 10px;
-    background-color:${Color.pikachuYellow};
+    background-color:${Color.lightYellow};
     border-radius:5px;
     border-style:solid;
     border-width:.5px;
-    border-color:${Color.primary};
+    border-color:${Color.pikachuYellow};
+        &:hover{
+            background-color:${Color.pikachuYellow};
+        }
+    `
+const H2 = styled.h2`
+        text-transform:uppercase;
+        color:${Color.gray};
+    `
+const Img = styled.img`
+    width:50px;
+    height:50px;
+`
+
+const StyledLink = styled(Link)`
+        text-decoration:none;
 `
 
 export default PokemonList;

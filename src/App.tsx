@@ -1,10 +1,10 @@
 import React,{useMemo,useState,useEffect} from 'react';
 import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client'
 import { BrowserRouter as Router, Routes,  Route } from "react-router-dom";
-import PokemonList from './pages/PokemonList';
+import PokemonList from './pages/PokemonList/PokemonList';
 import {PokemonContext} from './context/PokemonContext';
 import PokemonDetail from './pages/PokemonDetail/PokemonDetail';
-import MyPokemonList from './pages/MyPokemonList';
+import MyPokemonList from './pages/MyPokemonList/MyPokemonList';
 import Layout from './pages/Layout';
 const client = new ApolloClient({
   uri:`https://graphql-pokeapi.graphcdn.app`,

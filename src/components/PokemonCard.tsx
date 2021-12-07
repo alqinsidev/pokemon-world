@@ -61,16 +61,16 @@ const PokemonCard: React.FunctionComponent<Props> = ({name,url,image,onClick})=>
     `
     const H4 = styled.h4`
         text-transform:capitalize;
-        font-weight:700;
+        font-weight:500;
         font-size:1.6rem;
-        color:${Color.primary};
+        color:${Color.darkGray};
         margin:9px;
     `
     const P = styled.p`
         margin: 9px;
         font-weight:400;
         font-size:1rem;
-        color:${Color.primary};
+        color:${Color.gray};
     `
     const Img = styled.img`
         background-color:${Color.grey};

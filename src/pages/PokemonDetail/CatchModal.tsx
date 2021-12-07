@@ -1,4 +1,4 @@
-import React,{useState,useEffect, useContext} from 'react'
+import React,{useState, useContext} from 'react'
 import Modal from '../../components/Modal'
 import styled from '@emotion/styled'
 import { breakpoints } from '../../styles/Screen'

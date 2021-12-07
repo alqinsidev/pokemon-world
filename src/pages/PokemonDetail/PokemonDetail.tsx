@@ -1,10 +1,12 @@
 import { useQuery } from '@apollo/client';
 import styled from '@emotion/styled';
-import React, {useState,useEffect} from 'react'
+import React, {useState,useEffect, useContext} from 'react'
 import { useParams } from 'react-router';
 import Badge from '../../components/Badge';
 import Button from '../../components/Button';
+import { PokemonContext } from '../../context/PokemonContext';
 import { POKEMON } from '../../graphql/query';
+import { HowMuchIHave } from '../../misc/MyPokemon';
 import { Type2Color } from '../../misc/TypeColor';
 import { Color } from '../../styles/Color';
 import { breakpoints } from '../../styles/Screen';
@@ -28,6 +30,7 @@ const PokemonDetail: React.FunctionComponent = ()=> {
     let params = useParams();
     const [pokemon,setPokemon] = useState<Pokemon | null>(null)
     const [isOpen,setIsOpen] = useState<boolean>(false);
+    const {profile} = useContext(PokemonContext)
     
     const {data} = useQuery(POKEMON,{
         variables:{
@@ -64,6 +67,7 @@ const PokemonDetail: React.FunctionComponent = ()=> {
                     <ContainerOverflow>
                         {pokemon?.moves.map((a:any)=> <Badge stretch={true} label={a.move.name}/>)}
                     </ContainerOverflow>
+                    <Typhograhpy color={Color.gray} size={'.9rem'} weight={400}>You owned {HowMuchIHave(pokemon?.name || '',profile.Pokemons)} {pokemon?.name}</Typhograhpy>
                     <Button color={Color.secondary} label="Catch pokemon" onClick={()=>setIsOpen(!isOpen)} />
                 </Main>
                 :
