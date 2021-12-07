@@ -55,21 +55,24 @@ const PokemonList: React.FunctionComponent = ()=> {
         navigate(`/detail/${name}`)        
     }
     return (
-        <div>
+        <Container>
             <StyledLink to="/profile">
                 <Card>
                     <Img src="https://cdn-icons-png.flaticon.com/512/361/361998.png" alt=""/>
                     <H2>My Pokemon : {myPokemon?.length || "0"}</H2>
                 </Card>
             </StyledLink>
-            <h2>Explore more pokemon</h2>
+            <H2>Pokemon List</H2>
             {
                 pokemons?.results.map((pokemon:any,index:number) => <PokemonCard onClick={pokemonDetail} key={index} name={pokemon.name} url={pokemon.url} image={pokemon.image} />)
             }
-        </div>
+        </Container>
     )
 }
-
+const Container = styled.div`
+    display:flex;
+    flex-direction:column;
+`
 const Card = styled.div`
     display:flex;
     flex-direction:row;

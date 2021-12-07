@@ -8,6 +8,7 @@ import { UpdateMyPokemon } from '../../misc/UpdatePokemon'
 import { useParams } from 'react-router'
 import { PokemonContext } from '../../context/PokemonContext'
 import { Wait } from '../../misc/Wait'
+import { Color } from '../../styles/Color'
 
 interface Props {
     onClose:Function;
@@ -22,69 +23,160 @@ type Pokemon = {
     types:any;
 }
 
+type TyphograhpyProps = {
+    weight?:number;
+    color?:string;
+    size?:string;
+}
 
 const CatchModal:React.FunctionComponent<Props> = ({onClose,pokemon})=>{
     let params = useParams();
     const [busy,setBusy] = useState<boolean>(false);
+    const [success,setSuccess] = useState<boolean>(false);
+    const [modal,setModal] = useState<number>(0);
+    const [buttonLabel, setButtonLabel] = useState<string>(`Trying...`)
+    const [buttonColor, setButtonColor] = useState<string>(Color.primary)
+    const [nickname,setNickname] = useState<string>(``);
     const {profile,setProfile} = useContext(PokemonContext)
-
+    
     const clickHandler = (event:any):void => {
         onClose();
     }
-
+    
     const catchHandler = async ():Promise<void> => {
         if(!busy){
             setBusy(true)
+            await Wait(3000);
             console.log(`Trying to catch ${params.name}`);
+            setButtonLabel(`Almost there ...`)
             try{
-                await Wait(2000);
-                setBusy(false)
+                await Wait(3000);
                 if(CatchPossibilities()){
                     console.log(`${params.name} are successfully catched`);
                     // const update:Function = UpdateMyPokemon({pokemon:{
-                    //     name:params.name,
-                    //     nickname:"beni"
-                    // }})
-                    // setProfile({...profile,Pokemons:update})
-                    
-                } else {
-                    console.log(`${params.name} is running away !`);
+                        //     name:params.name,
+                        //     nickname:"beni"
+                        // }})
+                        // setProfile({...profile,Pokemons:update})
+                        setButtonColor(Color.success)
+                        setButtonLabel(`Yeaaayy ...`)
+                        await Wait(2000);
+                        setSuccess(true)
+                    } else {
+                        console.log(`${params.name} is running away !`);
+                        setButtonColor(Color.danger)
+                        setButtonLabel(`No... He ran away`)
+                        await Wait(2000);
+                    }
+                    setButtonLabel(`Trying...`)
+                    setBusy(false)
+                    setButtonColor(Color.primary)
+                }
+                catch(e) {
+                    if(e) console.error(e);
+                    setBusy(false)
                 }
             }
-            catch(e) {
-                if(e) console.error(e);
-                setBusy(false)
-            }
         }
-    }
+        
+        const SavePokemonHandler = async ():Promise<void>=>{
+            // setModal(1);
+            const update:Function = UpdateMyPokemon({pokemon:{
+                    name:params.name,
+                    nickname:nickname
+                }})
+                console.log("Update",update);
+                
+                setProfile({...profile,Pokemons:update})
+        }
+        
+        const Image = React.memo(()=><Img src={pokemon?.sprites?.front_default} alt="" />)
+        if(modal === 0){
+            return(
+                <Modal>
 
-    const Image = React.memo(()=><Img src={pokemon?.sprites?.front_default} alt="" />)
-    return(
-        <Modal>
-            <Main>
                 <button onClick={clickHandler}>X</button>
-                {/* <Img src={pokemon?.sprites?.front_default} alt="" /> */}
-                <Image/>
-                <h4>{pokemon?.name}</h4>
-                <Button label={busy?`Processing`:`Catch Me`} onClick={catchHandler}/>
-            </Main>
-        </Modal>
-    )
+                <Main>
+                    {
+                        !success?
+                        <>
+                            <Image/>
+                            <h4>{pokemon?.name}</h4>
+                            <Button color={buttonColor} label={busy?buttonLabel:`Catch Me`} onClick={catchHandler}/>
+                        </>
+                        :
+                        <>
+                            <Typhograhpy weight={700}>You have catch {pokemon?.name}</Typhograhpy>
+                            <Image/>
+                            <Typhograhpy size=".8rem">Do you want to save it to your collection?</Typhograhpy>
+                        </>
+
+}
+                </Main>
+                    {
+                        !success? null:
+                        <Col>
+                                <Button block={false} label="Release" color={Color.danger} onClick={clickHandler} />
+                                <Button block={false} label="Save it" color={Color.primary} onClick={()=>setModal(1)} />
+                            </Col>
+                    }
+            </Modal>
+        )
+    } else {
+        return(
+            <Modal>
+                <Main>
+                
+                    <Typhograhpy size="1rem">Give your {pokemon?.name} name</Typhograhpy>
+                    <Input type="text" value={nickname} onChange={e => setNickname(e.target.value)}/>
+                    <Button label="click me" onClick={()=> SavePokemonHandler()}/>
+                </Main>
+            </Modal>
+        );
+    }
 }
 
 const Main = styled.div`
-    ${breakpoints.sm}{
-        display:flex;
-        justify-content:space-between;
-        flex-direction:column;
-        align-items:center;
-    }
+${breakpoints.sm}{
+    display:flex;
+    justify-content:space-between;
+    flex-direction:column;
+    align-items:center;
+}
+`
+const Col = styled.div`
+${breakpoints.sm}{
+    margin:10px;
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+}
 `
 const Img = styled.img`
-    width:256px;
-    heigth:256px;
-    background-color:#f2f2f2;
-    border-radius:5px;
+width:256px;
+heigth:256px;
+background-color:#f2f2f2;
+border-radius:5px;
+    margin:10px;
 `
-
+const Typhograhpy = styled.div<TyphograhpyProps>`
+    font-weight:${props =>
+        props.weight? props.weight: 500
+    };
+    font-size:${props =>
+        props.size? props.size : `1rem`
+    };
+    color:${props =>
+        props.color? props.color: `#000`
+    };
+`
+const Input = styled.input`
+    height:2rem;
+    width:100%;
+        &[type="text"]{
+            color:${Color.darkGray};
+            font-weight:600;
+            font-size:1rem;
+        }
+`
 export default CatchModal;

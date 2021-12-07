@@ -21,7 +21,7 @@ const Navbar:React.FunctionComponent = ()=> {
 
     return (
         <Header>
-            <Link to="/pokedex">
+            <Link to="/">
                 <Img src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png" alt="" />
             </Link>
         </Header>

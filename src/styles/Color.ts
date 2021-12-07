@@ -3,6 +3,7 @@ export const Color = {
     primaryDarker:"#2B96C1",
     secondary:"#ee6b2f",
     danger:"#ef4444",
+    success:"#519259",
     pikachuYellow:"#fad61d",
     lightYellow:"#FBE260",
     darkGrey:"#e0e0e0",

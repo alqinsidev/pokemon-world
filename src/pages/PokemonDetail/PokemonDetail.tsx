@@ -34,12 +34,11 @@ const PokemonDetail: React.FunctionComponent = ()=> {
     
     const {data} = useQuery(POKEMON,{
         variables:{
-            name:params.name
+            name:params?.name
         }
     })
 
     
-
     useEffect(()=>{
         if(data){
             if(data.id !== null){
@@ -58,7 +57,7 @@ const PokemonDetail: React.FunctionComponent = ()=> {
                     <Container>
                         <Typhograhpy color={"#000"} size={'1.3rem'} weight={400}>Type</Typhograhpy>
                         <Col>
-                            {pokemon && pokemon.types.map((a:any,b:number) => <Badge stretch={true} key={b+'-'+a.id} label={a.type.name} color={Type2Color(a.type.name)}/>)}
+                            {pokemon && pokemon.types.map((a:any,b:number) => <Badge stretch={true} key={a.type.name+'-'+a.id} label={a.type.name} color={Type2Color(a.type.name)}/>)}
                         </Col>
                     </Container>
                     <Container>
@@ -73,7 +72,7 @@ const PokemonDetail: React.FunctionComponent = ()=> {
                 :
                 <h4>Pokemon not found</h4>
             }
-            {isOpen?<CatchModal onClose={()=> setIsOpen(!isOpen)} pokemon={pokemon}/>:null}
+            {isOpen?<CatchModal onClose={()=> setIsOpen(false)} pokemon={pokemon}/>:null}
         </div>
     )
 }

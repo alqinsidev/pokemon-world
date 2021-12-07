@@ -38,7 +38,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Layout/>}>
-              <Route path="pokedex" element={<PokemonList/>} />
+              <Route index element={<PokemonList/>} />
               <Route path="profile" element={<MyPokemonList/>}/>
               <Route path="detail/:name" element={<PokemonDetail/>}/>
             </Route>

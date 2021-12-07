@@ -2,7 +2,7 @@
 const UpdateMyPokemon = (pokemon:any):any => {
     const existingPokemon = JSON.parse(localStorage.getItem('myPokemon') || '[]');
     const isExsist:number = (existingPokemon.length > 0) ? 
-                        existingPokemon.findIndex((element:any) => element.pokemon.nickname.toLowercase().trim() === pokemon.pokemon.nickname.toLowercase().trim())
+                        existingPokemon.findIndex((element:any) => element.pokemon.nickname === pokemon.pokemon.nickname)
                         :-1;
                         
     if(isExsist<0){
