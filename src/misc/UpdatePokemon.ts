@@ -8,11 +8,11 @@ export const UpdateMyPokemon = (pokemon:any):any => {
     if(isExsist<0){
         existingPokemon.push(pokemon);
         localStorage.setItem('myPokemon',JSON.stringify(existingPokemon));
-        console.log("Successfully add pokemon to your list");
-        console.log(JSON.parse(localStorage.getItem('myPokemon') || '[]'),"LOCAL STORAGE")
+        // console.log("Successfully add pokemon to your list");
+        // console.log(JSON.parse(localStorage.getItem('myPokemon') || '[]'),"LOCAL STORAGE")
     }
     else{
-        console.log("Pokemon nickname already exsist", existingPokemon[isExsist])
+        // console.log("Pokemon nickname already exsist", existingPokemon[isExsist])
     }
     return existingPokemon;
 
